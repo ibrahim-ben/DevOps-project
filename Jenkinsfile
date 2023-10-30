@@ -7,5 +7,19 @@ pipeline {
                 checkout scm
             }
         }
+
+        stage('Run Unit Tests JUNIT') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        sh 'mvn clean test' 
+                    }
+                }
+            }
+        }
+
+    
     }
+
+
 }
