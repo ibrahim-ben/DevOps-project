@@ -18,7 +18,8 @@ pipeline {
             }
         }
 
-         stage('Build and Test Backend') {
+        // for backend
+        stage('Build and Test Backend') {
             steps {
                 dir('DevOps_Project') {
                     script {
@@ -31,7 +32,18 @@ pipeline {
 
             
         }
-
+        /// for front
+        stage('Build Frontend') {
+            steps {
+                dir('DevOps_Project_Front') {
+                    script {
+                        
+                        sh 'npm install' 
+                        sh 'ng build '      
+                    }
+                }
+            }
+        }
     
     }
 
