@@ -18,6 +18,20 @@ pipeline {
             }
         }
 
+         stage('Build and Test Backend') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                       
+                        sh 'mvn clean install -DskipTests' 
+                       
+                    }
+                }
+            }
+
+            
+        }
+
     
     }
 
