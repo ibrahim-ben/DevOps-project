@@ -24,6 +24,7 @@ services:
   database:
     image: mysql:latest
     environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_DATABASE: devops
       MYSQL_USER: root
       MYSQL_PASSWORD: root
