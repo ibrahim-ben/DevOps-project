@@ -14,7 +14,7 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests JUNIT') {
+        stage('Run Unit Tests with  JUNIT') {
             steps {
                 dir('DevOps_Project') {
                     script {
@@ -25,7 +25,7 @@ pipeline {
         }
 
         // for backend
-        stage('Build and Test Backend') {
+        stage('Build and Test for the Backend') {
             steps {
                 dir('DevOps_Project') {
                     script {
@@ -39,7 +39,7 @@ pipeline {
             
         }
         /// for front
-        stage('Build Frontend') {
+        stage('Build the Frontend') {
             steps {
                 dir('DevOps_Project_Front') {
                     script {
@@ -51,7 +51,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube analysis') {
+        stage('SonarQube Analysiss') {
             steps {
                 dir('DevOps_Project') {
                     script {
@@ -63,9 +63,9 @@ pipeline {
             }
         }
 
-        stage('Login Docker') {
+       stage('Login to my Docker') {
             steps {
-                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR --password $DOCKERHUB_CREDENTIALS_PSW'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
