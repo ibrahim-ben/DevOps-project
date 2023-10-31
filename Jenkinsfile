@@ -92,6 +92,15 @@ pipeline {
             }
         }
 
+        stage('Deploy with docker compose the front , back , and MYSQL') {
+            steps {
+                script {
+                    sh 'docker-compose -f docker-compose.yml up -d'                        
+                }
+                
+            }
+        }
+
     }
 
 
