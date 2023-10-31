@@ -3,6 +3,9 @@ pipeline {
     tools{
         nodejs 'NodeJs'
     }
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('ForDevOpsProject')
+    }
 
     stages {
         stage('GIT') {
@@ -59,6 +62,24 @@ pipeline {
                 }
             }
         }
+
+        stage('Login Docker') {
+            steps {
+              docker login -u $DOCKERHUB_CREDENTIALS_USR --password $DOCKERHUB_CREDENTIALS_PSW
+            }
+        }
+
+        stage('Build & Push Docker Image for the Backend Part ') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        sh 'docker build -t ibrahimben/devops_project_backend .'
+                        sh 'docker push ibrahimben/devops_project_backend'
+                    }
+                }
+            }
+        }
+
     
     }
 
