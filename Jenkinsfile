@@ -80,7 +80,18 @@ pipeline {
             }
         }
 
-    
+        stage('Build & Push Docker Image for the Frontend Part') {
+            steps {
+                dir('DevOps_Project_Front') {
+                    script {
+                        sh 'docker build -t ibrahimben/devops_project_frontend .'
+                        sh 'docker push ibrahimben/devops_project_frontend'
+                        
+                    }
+                }
+            }
+        }
+
     }
 
 
