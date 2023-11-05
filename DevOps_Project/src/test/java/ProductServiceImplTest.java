@@ -34,7 +34,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = {ProductServiceImpl.class}) // Provide the class to use for Spring Boot configuration
 public class ProductServiceImplTest {
     @MockBean
     ProductRepository productRepository;
