@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.beans.factory.annotation;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
