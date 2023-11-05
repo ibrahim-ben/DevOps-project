@@ -23,6 +23,9 @@ public class ProductServiceImpl implements IProductService {
    final StockRepository stockRepository;
    private final Counter customCounter;
 
+    public ProductServiceImpl() {
+        // Default constructor
+    }
 
     public ProductServiceImpl(ProductRepository productRepository, StockRepository stockRepository, MeterRegistry meterRegistry) {
         this.productRepository = productRepository;
