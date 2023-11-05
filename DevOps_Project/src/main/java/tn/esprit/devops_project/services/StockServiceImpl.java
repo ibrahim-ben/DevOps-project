@@ -7,7 +7,8 @@ import tn.esprit.devops_project.entities.Stock;
 import tn.esprit.devops_project.repositories.StockRepository;
 
 import java.util.List;
-
+import io.micrometer.core.annotation.Counted;
+import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class StockServiceImpl implements IStockService {
@@ -25,6 +26,8 @@ public class StockServiceImpl implements IStockService {
     }
 
     @Override
+    @Counted(value = "myapp.requests.processed", description = "Number of requests processed")
+
     public List<Stock> retrieveAllStock() {
         return stockRepository.findAll();
     }
