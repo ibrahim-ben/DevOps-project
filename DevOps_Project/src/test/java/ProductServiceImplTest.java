@@ -25,6 +25,9 @@ import tn.esprit.devops_project.repositories.ProductRepository;
 import tn.esprit.devops_project.repositories.StockRepository;
 import tn.esprit.devops_project.services.OperatorServiceImpl;
 import tn.esprit.devops_project.services.ProductServiceImpl;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.stereotype.Service;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceImplTest {
