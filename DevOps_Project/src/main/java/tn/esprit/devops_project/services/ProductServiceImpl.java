@@ -9,45 +9,21 @@ import tn.esprit.devops_project.entities.ProductCategory;
 import tn.esprit.devops_project.entities.Stock;
 import tn.esprit.devops_project.repositories.ProductRepository;
 import tn.esprit.devops_project.repositories.StockRepository;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.stereotype.Service;
-import org.junit.jupiter.api.Disabled;
-
 
 import java.util.List;
-import org.junit.Ignore;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-@Ignore
-@Disabled
-
 public class ProductServiceImpl implements IProductService {
 
    final ProductRepository productRepository;
    final StockRepository stockRepository;
-   final Counter productAdditionsCounter;
-
-
-    public ProductServiceImpl(ProductRepository productRepository, StockRepository stockRepository, MeterRegistry meterRegistry) {
-        this.productRepository = productRepository;
-        this.stockRepository = stockRepository;
-        this.productAdditionsCounter = Counter
-            .builder("product_additions_total")
-            .description("Total number of product additions")
-            .register(meterRegistry);
-    }
 
     @Override
     public Product addProduct(Product product, Long idStock) {
-        Stock stock = stockRepository.findById(idStock)
-            .orElseThrow(() -> new NullPointerException("stock not found"));
+        Stock stock = stockRepository.findById(idStock).orElseThrow(() -> new NullPointerException("stock not found"));
         product.setStock(stock);
-
-        productAdditionsCounter.increment();
-
         return productRepository.save(product);
     }
 
