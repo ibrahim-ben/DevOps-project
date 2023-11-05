@@ -16,6 +16,6 @@ scrape_configs:
     static_configs:
     - targets: ['192.168.33.10:8080']
   - job_name: 'backend'
-    metrics_path: /product
+    metrics_path: /actuator/prometheus
     static_configs:
     - targets: ['192.168.33.10:8082']
