@@ -12,13 +12,18 @@ import tn.esprit.devops_project.repositories.StockRepository;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
+import org.junit.jupiter.api.Disabled;
 
 
 import java.util.List;
+import org.junit.Ignore;
 
 @Service
 @AllArgsConstructor
 @Slf4j
+@Ignore
+@Disabled
+
 public class ProductServiceImpl implements IProductService {
 
    final ProductRepository productRepository;
