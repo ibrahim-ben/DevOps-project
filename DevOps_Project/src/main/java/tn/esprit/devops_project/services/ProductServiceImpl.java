@@ -20,10 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class ProductServiceImpl implements IProductService {
 
-   final ProductRepository productRepository;
-   final StockRepository stockRepository;
-   private final Counter customCounter;
-
+    final ProductRepository productRepository;
+    final StockRepository stockRepository;
+    private final Counter customCounter;
+    @Autowired
+    private final Counter customCounter; 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, StockRepository stockRepository) {
         this.productRepository = productRepository;
