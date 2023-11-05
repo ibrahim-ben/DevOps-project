@@ -40,7 +40,6 @@ public class ProductServiceImplTest {
     @InjectMocks
     ProductServiceImpl productService;
 
-    @Autowired
     private MeterRegistry meterRegistry; 
 
     @Test
