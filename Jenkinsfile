@@ -22,7 +22,7 @@ pipeline {
                     }
                 }
             }
-
+        }
         stage('Run Unit Tests with  JUNIT') {
             steps {
                 dir('DevOps_Project') {
