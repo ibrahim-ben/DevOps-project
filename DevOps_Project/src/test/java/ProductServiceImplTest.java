@@ -37,7 +37,12 @@ public class ProductServiceImplTest {
     @InjectMocks
     ProductServiceImpl productService;
 
+    @Autowired
+    private MeterRegistry meterRegistry; 
+
     @Test
+    @ExtendWith(MockitoExtension.class)
+
     public void addProductTest() {
         Stock stock = new Stock(2L, "StocknumberN", null); 
         Product product = new Product(2L, "ProductnumberN", 11.0f, 33, ProductCategory.ELECTRONICS, stock);
@@ -47,6 +52,10 @@ public class ProductServiceImplTest {
 
         assertNotNull(addedProduct);
         assertEquals("ProductnumberN", addedProduct.getTitle());
+
+        Counter customCounter = meterRegistry.find("custom_metric_name").counter();
+        assertNotNull(customCounter);
+        assertEquals(1.0, customCounter.count(), 0.0); 
     }
 
     @Test
