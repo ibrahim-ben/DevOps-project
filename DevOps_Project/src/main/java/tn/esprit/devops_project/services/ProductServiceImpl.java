@@ -13,6 +13,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 @AllArgsConstructor
@@ -23,9 +24,11 @@ public class ProductServiceImpl implements IProductService {
    final StockRepository stockRepository;
    private final Counter customCounter;
 
-    public ProductServiceImpl() {
-        // Default constructor
+   @Autowired
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
+
 
     public ProductServiceImpl(ProductRepository productRepository, StockRepository stockRepository, MeterRegistry meterRegistry) {
         this.productRepository = productRepository;
