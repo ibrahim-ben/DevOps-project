@@ -33,9 +33,9 @@ public class OperatorServiceImplTest {
     public void retrieveAllOperateursTest() {
         when(operateurRepository.findAll()).thenReturn(
                 Arrays.asList(
-                        new Operator(1L, "fathi", "hadewi", "fathi123", null),
-                        new Operator(2L, "hamza", "lahmer", "hamza123", null),
-                        new Operator(3L, "faysel", "mhamed", "faysel123", null)
+                        new Operator(1L, "salah", "ibrahim", "123", null),
+                        new Operator(2L, "ahmed", "barh", "555", null),
+                        new Operator(3L, "mahdi", "test", "562", null)
                 )
         );
 
@@ -45,14 +45,14 @@ public class OperatorServiceImplTest {
 
     @Test
     public void addOperateurTest() {
-        Operator op = new Operator(1L,"fathi","hadewi","fathi123", null);
+        Operator op = new Operator(1L,"mahdi","mahdi","1111", null);
         when(operateurRepository.save(op)).thenReturn(op);
         assertEquals(op, operateurService.addOperator(op));
     }
 
     @Test
     public void retreiveOperateurTest() {
-        Operator op = new Operator(2L,"hamza","lahmer","hamza123", null);
+        Operator op = new Operator(2L,"ahmed","barh","555", null);
         when(operateurRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(op));
         Operator op1 = operateurService.retrieveOperator(2L);
         Assertions.assertNotNull(op1);
@@ -69,7 +69,6 @@ public class OperatorServiceImplTest {
 
     @Test
     public void deleteOperateurTest() {
-       // Operator op = new Operator(1L,"fathi","hadewi","fathi123", null);
         operateurService.deleteOperator(1L);
         verify(operateurRepository).deleteById(1L);
 
@@ -77,13 +76,13 @@ public class OperatorServiceImplTest {
 
     @Test
     public void updatetOperateurTest() {
-        Operator op = new Operator(1L,"fathi","hadewi","fathi123", null) ;
+        Operator op = new Operator(1L,"salah","ibrahim","123", null) ;
         Mockito.when(operateurRepository.save(Mockito.any(Operator.class))).thenReturn(op);
-        op.setFname("mohamed");;
+        op.setFname("bbb");;
         Operator exisitingOp= operateurService.updateOperator(op) ;
 
         assertNotNull(exisitingOp);
-        assertEquals("mohamed", op.getFname());
+        assertEquals("bbb", op.getFname());
     }
 
 }
