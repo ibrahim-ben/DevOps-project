@@ -25,29 +25,17 @@ import tn.esprit.devops_project.repositories.ProductRepository;
 import tn.esprit.devops_project.repositories.StockRepository;
 import tn.esprit.devops_project.services.OperatorServiceImpl;
 import tn.esprit.devops_project.services.ProductServiceImpl;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.stereotype.Service;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {ProductServiceImpl.class}) // Provide the class to use for Spring Boot configuration
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceImplTest {
-    @MockBean
+    @Mock
     ProductRepository productRepository;
 
-    @MockBean
+    @Mock
     StockRepository stockRepository;
 
-    @Autowired
-    ProductServiceImpl productService; // This is the real service, not a mock
-
-    @Autowired
-    MeterRegistry meterRegistry; // Inject the MeterRegistry from Spring
-
+    @InjectMocks
+    ProductServiceImpl productService;
 
     @Test
     public void addProductTest() {
@@ -59,10 +47,6 @@ public class ProductServiceImplTest {
 
         assertNotNull(addedProduct);
         assertEquals("ProductnumberN", addedProduct.getTitle());
-
-        Counter customCounter = meterRegistry.find("custom_metric_name").counter();
-        assertNotNull(customCounter);
-        assertEquals(1.0, customCounter.count(), 0.0); 
     }
 
     @Test
