@@ -22,7 +22,6 @@ public class ProductServiceImpl implements IProductService {
 
     final ProductRepository productRepository;
     final StockRepository stockRepository;
-    private final Counter customCounter;
     @Autowired
     private final Counter customCounter; 
     @Autowired
@@ -41,7 +40,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product addProduct(Product product, Long idStock) {
         Stock stock = stockRepository.findById(idStock).orElseThrow(() -> new NullPointerException("stock not found"));
-        product.setStock(stock);
+       // product.setStock(stock);
         customCounter.increment(); 
         return productRepository.save(product);
     }
