@@ -101,7 +101,7 @@ pipeline {
             }
         }
 
-        stage('Deploy with docker compose the front , back , and MYSQL + Grafana and Prometheus') {
+        stage('Deploy with docker compose the front , back , and MYSQL + graf+prom') {
             steps {
                 script {
                     sh 'docker-compose -f docker-compose.yml up -d'                        
@@ -110,18 +110,9 @@ pipeline {
             }
         }
 
-/*
-       stage('Deploy Grafana and Prometheus') {
-            steps {
-                script {
-                    sh 'docker-compose -f docker-compose-forPrometheuscode.yml -f docker-compose-forGrafanacode.yml up -d'                        
-                }
-                
-            }
-        }
+       
 
     }
-    */
 
 
 }
