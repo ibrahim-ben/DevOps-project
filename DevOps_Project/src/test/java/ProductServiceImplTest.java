@@ -28,23 +28,27 @@ import tn.esprit.devops_project.services.ProductServiceImpl;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class ProductServiceImplTest {
-    @Mock
+    @MockBean
     ProductRepository productRepository;
 
-    @Mock
+    @MockBean
     StockRepository stockRepository;
 
-    @InjectMocks
-    ProductServiceImpl productService;
+    @Autowired
+    ProductServiceImpl productService; // This is the real service, not a mock
 
-    private MeterRegistry meterRegistry; 
+    @Autowired
+    MeterRegistry meterRegistry; // Inject the MeterRegistry from Spring
+
 
     @Test
-    @ExtendWith(MockitoExtension.class)
-
     public void addProductTest() {
         Stock stock = new Stock(2L, "StocknumberN", null); 
         Product product = new Product(2L, "ProductnumberN", 11.0f, 33, ProductCategory.ELECTRONICS, stock);
