@@ -31,13 +31,13 @@ public class ProductServiceImpl implements IProductService {
             .description("counting")
             .register(meterRegistry);
     }
-  @Override
+    @Override
     public Product addProduct(Product product, Long idStock) {
         Stock stock = stockRepository.findById(idStock).orElseThrow(() -> new NullPointerException("stock not found"));
         product.setStock(stock);
         customCounter.increment(); 
         return productRepository.save(product);
-}
+    }
 
     @Override
     public Product retrieveProduct(Long id) {
