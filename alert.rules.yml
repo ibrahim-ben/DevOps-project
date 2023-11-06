@@ -1,0 +1,20 @@
+groups:
+  - name: my_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: http_server_requests_seconds_count{status="5xx"} / http_server_requests_seconds_count > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High error rate in HTTP requests
+          description: The error rate is consistently above 5% for the last 5 minutes.
+
+      - alert: DiskSpaceExhausted
+        expr: (disk_free_bytes / disk_size_bytes) * 100 < 10
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: Low Disk Space
+          description: Disk space is running low (less than 10% free) for the last 15 minutes.
