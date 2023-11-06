@@ -29,38 +29,34 @@ public class StockServiceImplTest {
     @InjectMocks
     StockServiceImpl stockService;
 
-    //Test for retrieving all stocks
     @Test
     public void retrieveAllStocksTest() {
         when(stockRepository.findAll()).thenReturn(
                 Arrays.asList(
-                        new Stock(1L, "Milk", null),
-                        new Stock(2L, "Boxes", null),
-                        new Stock(3L, "Cartons", null)
+                        new Stock(1L, "delice", null),
+                        new Stock(2L, "coca", null),
+                        new Stock(3L, "vitaliat", null)
                 )
         );
 
         assertEquals(3, stockService.retrieveAllStock().size());
     }
 
-    // Test for adding stock
     @Test
     public void addStockTest() {
-        Stock stock = new Stock(1L, "Milk", null);
+        Stock stock = new Stock(1L, "delice", null);
         when(stockRepository.save(stock)).thenReturn(stock);
         assertEquals(stock, stockService.addStock(stock));
     }
 
-    // Test for stock found
     @Test
     public void retrieveStockFoundTest() {
-        Stock stock = new Stock(2L, "Boxes", null);
+        Stock stock = new Stock(2L, "coca", null);
         when(stockRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(stock));
         Stock stock1 = stockService.retrieveStock(2L);
         Assertions.assertNotNull(stock1);
     }
 
-    // Test for stock not found
     @Test
     public void retrieveStockNotFoundTest() {
         when(stockRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());

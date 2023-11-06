@@ -29,38 +29,34 @@ public class SupplierServiceImplTest {
     @InjectMocks
     SupplierServiceImpl supplierService;
 
-    //Test for retrieving all suppliers
     @Test
     public void retrieveAllSuppliersTest() {
         when(supplierRepository.findAll()).thenReturn(
                 Arrays.asList(
-                        new Supplier(1L, "Code1", "label1", SupplierCategory.CONVENTIONNE, null),
-                        new Supplier(2L, "Code2", "label2", SupplierCategory.ORDINAIRE, null),
-                        new Supplier(3L, "Code3", "label3", SupplierCategory.ORDINAIRE, null)
+                        new Supplier(1L, "number1", "label1", SupplierCategory.CONVENTIONNE, null),
+                        new Supplier(2L, "number2", "label2", SupplierCategory.ORDINAIRE, null),
+                        new Supplier(3L, "number3", "label3", SupplierCategory.ORDINAIRE, null)
                 )
         );
 
         assertEquals(3, supplierService.retrieveAllSuppliers().size());
     }
 
-    // Test for adding a supplier
     @Test
     public void addSupplierTest() {
-        Supplier supplier = new Supplier(1L,"Code1","label1", SupplierCategory.CONVENTIONNE,null);
+        Supplier supplier = new Supplier(1L,"number1","label1", SupplierCategory.CONVENTIONNE,null);
         when(supplierRepository.save(supplier)).thenReturn(supplier);
         assertEquals(supplier, supplierService.addSupplier(supplier));
     }
 
-    // Test for supplier found
     @Test
     public void retreiveSupplierTest() {
-        Supplier supplier = new Supplier(2L,"Code2","label2", SupplierCategory.ORDINAIRE,null);
+        Supplier supplier = new Supplier(2L,"number2","label2", SupplierCategory.ORDINAIRE,null);
         when(supplierRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(supplier));
         Supplier supplier1 = supplierService.retrieveSupplier(2L);
         Assertions.assertNotNull(supplier1);
 
     }
-    //Test for supplier not found
     @Test
     public void retrieveSupplierNotFoundTest() {
         when(supplierRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
@@ -69,17 +65,15 @@ public class SupplierServiceImplTest {
         });
     }
 
-    //Test for deleting a supplier
     @Test
     public void deleteSupplierTest() {
         supplierService.deleteSupplier(1L);
         verify(supplierRepository).deleteById(1L);
 
     }
-    //Test for updating a supplier
     @Test
     public void updateSupplierTest() {
-        Supplier supplier = new Supplier(1L,"Code1","label1", SupplierCategory.CONVENTIONNE,null);
+        Supplier supplier = new Supplier(1L,"number1","label1", SupplierCategory.CONVENTIONNE,null);
         Mockito.when(supplierRepository.save(Mockito.any(Supplier.class))).thenReturn(supplier);
         supplier.setCode("Code15");;
         Supplier exisitingSupplier= supplierService.updateSupplier(supplier) ;

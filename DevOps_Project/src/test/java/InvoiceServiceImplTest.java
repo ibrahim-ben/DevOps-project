@@ -65,7 +65,6 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void cancelInvoiceNotFoundTest() {
-        // Simulate that the invoice is not found
         when(invoiceRepository.findById(1L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(NullPointerException.class, () -> {
@@ -88,7 +87,7 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void retrieveInvoiceNotFoundTest() {
-        when(invoiceRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty()); // Simulate not finding the invoice
+        when(invoiceRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty()); 
 
         Assertions.assertThrows(NullPointerException.class, () -> {
             invoiceService.retrieveInvoice(1L);
@@ -99,8 +98,8 @@ public class InvoiceServiceImplTest {
 
     @Test
     public void getTotalAmountInvoiceBetweenDatesTest() {
-        Date startDate = new Date(1634994000000L); // October 23, 2021
-        Date endDate = new Date(1635354000000L);   // October 27, 2021
+        Date startDate = new Date(1634994000000L); 
+        Date endDate = new Date(1635354000000L);  
         when(invoiceRepository.getTotalAmountInvoiceBetweenDates(startDate, endDate)).thenReturn(500.0f);
 
         float totalAmount = invoiceService.getTotalAmountInvoiceBetweenDates(startDate, endDate);
@@ -113,7 +112,7 @@ public class InvoiceServiceImplTest {
         Long idOperator = 1L;
         Long idInvoice = 1L;
 
-        Operator operator = new Operator(idOperator, "fathi", "hadewi", "fathi123", new HashSet<>());
+        Operator operator = new Operator(idOperator, "barhoum", "ben", "br123", new HashSet<>());
         Invoice invoice = new Invoice(idInvoice, 10.0f, 100.0f, new Date(), new Date(), false, null, null);
 
         when(invoiceRepository.findById(idInvoice)).thenReturn(Optional.of(invoice));
@@ -148,27 +147,7 @@ public class InvoiceServiceImplTest {
 
         assertThrows(NullPointerException.class, () -> invoiceService.assignOperatorToInvoice(idOperator, idInvoice));
     }
-/*
-    @Test
-    public void getInvoicesBySupplier_SupplierFound() {
-        Long idSupplier = 1L;
-        Supplier supplier = new Supplier(idSupplier, "Code1", "label1", SupplierCategory.CONVENTIONNE, new HashSet<>(), null);
-        Invoice invoice = new Invoice(1L, 10.0f, 100.0f, new Date(), new Date(), false, null, supplier);
 
-        // Add the invoice to the supplier's HashSet
-        supplier.getInvoices().add(invoice);
-
-        when(supplierRepository.findById(idSupplier)).thenReturn(Optional.of(supplier));
-
-        // Call the service method
-        List<Invoice> invoices = invoiceService.getInvoicesBySupplier(idSupplier);
-
-        verify(supplierRepository, times(1)).findById(idSupplier);
-
-        // Assert that the List contains the invoice
-        assertThat(invoices).contains(invoice);
-    }
-*/
     @Test
     public void getInvoicesBySupplierNotFound() {
         Long idSupplier = 1L;

@@ -28,10 +28,9 @@ public class OperatorControllerTest {
 
     @Test
     public void getOperatorsTest() {
-        // Mock the behavior to return a list of operators
         when(operatorService.retrieveAllOperators()).thenReturn(Arrays.asList(
-                new Operator(1L,"fathi","hadewi","fathi123", null),
-                new Operator(2L,"hamza","lahmer","hamza123", null)
+                new Operator(1L,"salah","ibrahim","123", null),
+                new Operator(2L,"ahmed","barh","555", null)
         ));
 
         List<Operator> operators = operatorController.getOperators();
@@ -41,20 +40,19 @@ public class OperatorControllerTest {
 
     @Test
     public void retrieveOperatorTest() {
-        // Mock the behavior to return an operator
-        when(operatorService.retrieveOperator(1L)).thenReturn(new Operator(1L,"fathi","hadewi","fathi123", null));
+        when(operatorService.retrieveOperator(1L)).thenReturn(new Operator(1L,"salah","ibrahim","123", null));
 
         Operator operator = operatorController.retrieveoperator(1L);
 
         assertEquals(1L, operator.getIdOperateur());
-        assertEquals("fathi", operator.getFname());
-        assertEquals("hadewi", operator.getLname());
-        assertEquals("fathi123", operator.getPassword());
+        assertEquals("salah", operator.getFname());
+        assertEquals("ibrahim", operator.getLname());
+        assertEquals("123", operator.getPassword());
     }
 
     @Test
     public void addOperatorTest() {
-        Operator newOperator = new Operator(1L,"fathi","hadewi","fathi123", null);
+        Operator newOperator = new Operator(1L,"salah","ibrahim","123", null);
 
         when(operatorService.addOperator(newOperator)).thenReturn(newOperator);
 
@@ -71,7 +69,7 @@ public class OperatorControllerTest {
 
     @Test
     public void modifyOperateurTest() {
-        Operator operator = new Operator(1L,"fathi","hadewi","fathi123", null);
+        Operator operator = new Operator(1L,"salah","ibrahim","123", null);
 
         when(operatorService.updateOperator(operator)).thenReturn(operator);
 
