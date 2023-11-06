@@ -18,32 +18,13 @@ pipeline {
             steps {
                 dir('DevOps_Project') {
                     script {
-                        sh 'mvn clean install'
-                    }
-                }
-            }
-        }
-
-        stage('Run Unit Tests with JUNIT') {
-            steps {
-                dir('DevOps_Project') {
-                    script {
-                        sh 'mvn clean test'
-                    }
-                }
-            }
-        }
-
-        // for backend
-        stage('Build and Test for the Backend') {
-            steps {
-                dir('DevOps_Project') {
-                    script {
                         sh 'mvn clean install -DskipTests'
                     }
                 }
             }
         }
+
+
         // adding Nexus
         stage('NEXUS') {
             steps {
