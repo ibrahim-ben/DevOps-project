@@ -18,7 +18,35 @@ pipeline {
             steps {
                 dir('DevOps_Project') {
                     script {
-                        sh 'mvn clean install -DskipTests'
+                        sh 'mvn clean'
+                        sh 'mvn test'
+                        sh 'mvn jacoco:report'
+                        sh 'mvn package -DskipTests'
+                    }
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        withSonarQubeEnv(installationName: 'sonarqube') {
+                            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
+        // adding Nexus
+        stage('NEXUS') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        sh "mvn deploy -DskipTests=true"
                     }
                 }
             }
@@ -71,29 +99,6 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose -f docker-compose.yml up -d'
-                }
-            }
-        }
-
-        
-        stage('Run Unit Tests with JUNIT') {
-            steps {
-                dir('DevOps_Project') {
-                    script {
-                        sh 'mvn clean test'
-                    }
-                }
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                dir('DevOps_Project') {
-                    script {
-                        withSonarQubeEnv(installationName: 'sonarqube') {
-                            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-                        }
-                    }
                 }
             }
         }
