@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-
+    
         stage('SonarQube Analysis') {
             steps {
                 dir('DevOps_Project') {
@@ -42,6 +42,7 @@ pipeline {
         
 
         // adding Nexus
+     /*
         stage('NEXUS') {
             steps {
                 dir('DevOps_Project') {
@@ -51,6 +52,7 @@ pipeline {
                 }
             }
         }
+    */
 
 
         /// for front
