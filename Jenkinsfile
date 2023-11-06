@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    tools{
+    tools {
         nodejs 'NodeJs'
     }
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('ForDevOpsProject')
+        DOCKERHUB_CREDENTIALS = credentials('ForDevOpsProject')
     }
 
     stages {
@@ -13,7 +13,7 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Build and Test for the Backend ( adding mvn)') {
             steps {
                 dir('DevOps_Project') {
@@ -23,11 +23,12 @@ pipeline {
                 }
             }
         }
-        stage('Run Unit Tests with  JUNIT') {
+
+        stage('Run Unit Tests with JUNIT') {
             steps {
                 dir('DevOps_Project') {
                     script {
-                        sh 'mvn clean test' 
+                        sh 'mvn clean test'
                     }
                 }
             }
@@ -38,47 +39,43 @@ pipeline {
             steps {
                 dir('DevOps_Project') {
                     script {
-                       
-                        sh 'mvn clean install -DskipTests' 
-                       
+                        sh 'mvn clean install -DskipTests'
                     }
                 }
             }
-
-            
         }
+
         /// for front
         stage('Build the Frontend') {
             steps {
                 dir('DevOps_Project_Front') {
                     script {
-                        
-                        sh 'npm install' 
-                        sh 'ng build '      
+                        sh 'npm install'
+                        sh 'ng build '
                     }
                 }
             }
         }
 
-        stage('SonarQube Analysiss') {
+        stage('SonarQube Analysis') {
             steps {
                 dir('DevOps_Project') {
                     script {
-                        withSonarQubeEnv(installationName: 'sonarqube') { 
-                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                        withSonarQubeEnv(installationName: 'sonarqube') {
+                            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
                         }
                     }
                 }
             }
         }
 
-       stage('Login to my Docker') {
+        stage('Login to my Docker') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
-        stage('Build & Push Docker Image for the Backend Part ') {
+        stage('Build & Push Docker Image for the Backend Part') {
             steps {
                 dir('DevOps_Project') {
                     script {
@@ -95,24 +92,47 @@ pipeline {
                     script {
                         sh 'docker build -t ibrahimben/devops_project_frontend .'
                         sh 'docker push ibrahimben/devops_project_frontend'
-                        
                     }
                 }
             }
         }
 
-        stage('Deploy with docker compose the front , back , and MYSQL + graf+prom') {
+        stage('Deploy with Docker Compose the front, back, and MYSQL + graf+prom') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml up -d'                        
+                    sh 'docker-compose -f docker-compose.yml up -d'
                 }
-                
             }
         }
 
-       
-
     }
 
+    post {
+        success {
+            script {
+                def subject = "Build Success"
+                def body = "The build was successful."
+                def to = 'ibrahim.benabderrahman@esprit.tn'
 
+                mail(
+                    subject: subject,
+                    body: body,
+                    to: to
+                )
+            }
+        }
+        failure {
+            script {
+                def subject = "Build Failure - ${currentBuild.fullDisplayName}"
+                def body = "The build has failed."
+                def to = 'ibrahim.benabderrahman@esprit.tn'
+
+                mail(
+                    subject: subject,
+                    body: body,
+                    to: to
+                )
+            }
+        }
+    }
 }
