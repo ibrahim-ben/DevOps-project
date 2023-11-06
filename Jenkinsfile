@@ -47,6 +47,7 @@ pipeline {
         // adding Nexus
         stage('NEXUS'){
             steps{
+                sh "cd /var/lib/jenkins/workspace/DevOps-Project/DevOps_Project"
                 sh "mvn deploy -DskipTests=true"  
             }
         }
