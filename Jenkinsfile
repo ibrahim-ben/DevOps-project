@@ -12,8 +12,15 @@ pipeline {
             steps {
                 checkout scm
             }
+            post {
+                success {
+                    slackSend(channel: SLACK_CHANNEL, color: 'good', message: 'GIT stage completed successfully')
+                }
+                failure {
+                    slackSend(channel: SLACK_CHANNEL, color: 'danger', message: 'GIT stage failed')
+                }
+            }
         }
-
         stage('Build and Test for the Backend ( adding mvn)') {
             steps {
                 dir('DevOps_Project') {
@@ -23,6 +30,14 @@ pipeline {
                         sh 'mvn jacoco:report'
                         sh 'mvn package -DskipTests'
                     }
+                }
+            }
+            post {
+                success {
+                    slackSend(channel: SLACK_CHANNEL, color: 'good', message: 'Backend build and test stage completed successfully')
+                }
+                failure {
+                    slackSend(channel: SLACK_CHANNEL, color: 'danger', message: 'Backend build and test stage failed')
                 }
             }
         }
@@ -35,6 +50,14 @@ pipeline {
                             sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
                         }
                     }
+                }
+            }
+            post {
+                success {
+                    slackSend(channel: SLACK_CHANNEL, color: 'good', message: 'SonarQube analysis completed successfully')
+                }
+                failure {
+                    slackSend(channel: SLACK_CHANNEL, color: 'danger', message: 'SonarQube analysis failed')
                 }
             }
         }
@@ -101,6 +124,14 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose -f docker-compose.yml up -d'
+                }
+            }
+            post {
+                success {
+                    slackSend(channel: SLACK_CHANNEL, color: 'good', message: 'Deployment completed successfully')
+                }
+                failure {
+                    slackSend(channel: SLACK_CHANNEL, color: 'danger', message: 'Deployment failed')
                 }
             }
         }
