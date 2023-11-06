@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('ForDevOpsProject')
+        SLACK_CHANNEL = '#jenkins'
     }
 
     stages {
