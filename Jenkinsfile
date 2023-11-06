@@ -25,16 +25,6 @@ pipeline {
         }
 
 
-        // adding Nexus
-        stage('NEXUS') {
-            steps {
-                dir('DevOps_Project') {
-                    script {
-                        sh "mvn deploy -DskipTests=true"
-                    }
-                }
-            }
-        }
 
 
         /// for front
