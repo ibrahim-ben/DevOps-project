@@ -44,6 +44,12 @@ pipeline {
                 }
             }
         }
+        // adding Nexus
+        stage('NEXUS'){
+            steps{
+                sh "mvn deploy -DskipTests=true"  
+            }
+        }
 
         /// for front
         stage('Build the Frontend') {
@@ -109,30 +115,13 @@ pipeline {
 
     post {
         success {
-            script {
-                def subject = "Build Success"
-                def body = "The build was successful."
-                def to = 'ibrahim.benabderrahman@esprit.tn'
-
-                mail(
-                    subject: subject,
-                    body: body,
-                    to: to
-                )
-            }
+            emailext subject: "Success",
+                      body: "Success on job  ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}",
+                      to: "ibrahim.benabderrahman@esprit.tn"
         }
         failure {
-            script {
-                def subject = "Build Failure - ${currentBuild.fullDisplayName}"
-                def body = "The build has failed."
-                def to = 'ibrahim.benabderrahman@esprit.tn'
-
-                mail(
-                    subject: subject,
-                    body: body,
-                    to: to
-                )
-            }
-        }
+            emailext subject: "Failure",
+                      body: "Failure on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}",
+                      to: "ibrahim.benabderrahman@esprit.tn"
     }
-}
+}}
