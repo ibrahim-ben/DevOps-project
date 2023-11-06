@@ -18,3 +18,13 @@ groups:
         annotations:
           summary: Low Disk Space
           description: Disk space is running low (less than 10% free) for the last 15 minutes.
+
+      - alert: DummyAlert
+        expr: vector(0) == 1
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Dummy alert for testing
+          description: This is a test alert that doesn't rely on real metric data.
+
