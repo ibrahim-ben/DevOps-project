@@ -28,3 +28,13 @@ groups:
           summary: Dummy alert for testing
           description: This is a test alert that doesn't rely on real metric data.
 
+      - alert: HighCPUUsage
+        expr: node_cpu_seconds_total{mode="idle"} < 0.1
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: High CPU Usage
+          description: CPU usage is consistently below 10% for the last 1 minute.
+      
+

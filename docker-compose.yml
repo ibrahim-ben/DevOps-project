@@ -34,13 +34,13 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml  # Add the alerting rules file
+      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml 
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
     networks:
-      - mynetwork  # Use the custom network
+      - mynetwork  
 
   grafana:
     image: grafana/grafana:latest
@@ -50,7 +50,7 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
-      - mynetwork  # Use the custom network
+      - mynetwork  
 
 volumes:
   db_data:
