@@ -14,6 +14,16 @@ pipeline {
             }
         }
 
+        stage('Build and Test for the Backend ( adding mvn)') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
         stage('Run Unit Tests with JUNIT') {
             steps {
                 dir('DevOps_Project') {
@@ -29,7 +39,7 @@ pipeline {
             steps {
                 dir('DevOps_Project') {
                     script {
-                        sh 'mvn package -DskipTests'
+                        sh 'mvn clean install -DskipTests'
                     }
                 }
             }
@@ -44,6 +54,7 @@ pipeline {
                 }
             }
         }
+
 
         /// for front
         stage('Build the Frontend') {
