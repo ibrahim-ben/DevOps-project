@@ -36,5 +36,14 @@ groups:
         annotations:
           summary: High CPU Usage
           description: CPU usage is consistently below 10% for the last 1 minute.
+
+      - alert: HighErrorRate
+        expr: http_server_requests_total > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: High Error Rate in HTTP Requests
+          description: At least one HTTP request was made in the last minute.
       
 
