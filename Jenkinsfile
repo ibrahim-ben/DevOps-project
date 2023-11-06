@@ -65,7 +65,7 @@ pipeline {
 
         
 
-        // adding Nexus
+        // adding Nexus commented due to cpu reasons 
      /*
         stage('NEXUS') {
             steps {
